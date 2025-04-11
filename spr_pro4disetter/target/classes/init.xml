@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- setter injection -->
+	<bean id="myBusiness" class="pack.MyBusiness">
+		<property name="nai" value="23"/>
+		<property name="juso" value="테헤란로"/>	<!-- 여기서 name은 setter의 이름을 의미한다. -->
+		<property name="datas" ref="stringDatas"/>
+	</bean>
+	<bean name="stringDatas" class="pack.StringDatas"/>
+	
+</beans>
