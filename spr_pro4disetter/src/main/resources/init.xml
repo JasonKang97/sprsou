@@ -2,12 +2,20 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-	<!-- setter injection -->
+	<!-- 방법1: setter injection -->
+	<!-- 
 	<bean id="myBusiness" class="pack.MyBusiness">
 		<property name="nai" value="23"/>
-		<property name="juso" value="테헤란로"/>	<!-- 여기서 name은 setter의 이름을 의미한다. -->
+		<property name="juso" value="테헤란로"/>	여기서 name은 setter의 이름을 의미한다. 
 		<property name="datas" ref="stringDatas"/>
 	</bean>
 	<bean name="stringDatas" class="pack.StringDatas"/>
-	
+	 -->
+	 
+	 <!-- 방법2: setter injection -->
+	 	<bean id="myBusiness" class="pack.MyBusiness">
+		<property name="nai"><value>24</value></property>
+		<property name="juso"><value>테헤란로</value></property>
+		<property name="datas"><bean class="pack.StringDatas"/></property>
+	</bean>
 </beans>
