@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- constructor injection -->
+	<!-- scope="singleton", prototype, request, session  -->
+	<!-- prototype을 사용하면 일반적인 객체 생성과 같은 형식으로 생성 -->
+	<bean id="messageImpl" class="pack.controller.MessageImpl" scope="singleton">
+	<!-- index를 이용하여 들어가는 순서를 정할 수 있다.
+		<constructor-arg index="1">
+			<value>홍길동</value>
+		</constructor-arg>
+		<constructor-arg value="고길동" index="0"/>
+	-->
+	<constructor-arg index="1" value="고길동" type="java.lang.String"/>
+	<constructor-arg index="0" value="홍길동" type="String"/>
+	<constructor-arg index="2" value="25" type="int"/>
+	<constructor-arg index="3" type="pack.model.MyInfo" ref="myInfo"/>
+	
+	<!-- setter injection -->
+	<property name="spec">
+		<value>웹프로그램</value>
+	</property>
+	<property name="ourInfo">	<!-- 여기서는 setter의 이름을 의미 -->
+		<ref bean="ourInfo"/>	<!-- 여기서는 아래의 bean 이름을 의미 -->
+	</property>
+	<property name="outFileInter">
+		<ref bean="outFileInterImpl"/>
+	</property>
+	
+	
+	</bean>
+	<bean id="myInfo" class="pack.model.MyInfo"/>
+	<bean id="ourInfo" class="pack.model.OurInfo"/>
+	<bean id="outFileInterImpl" class="pack.other.OutFileInterImpl">
+		<property name="filePath" value="C:/workspr/good.txt"/>
+	</bean>
+</beans>
