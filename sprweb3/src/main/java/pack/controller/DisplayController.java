@@ -9,7 +9,7 @@ import pack.model.ScoreBean;
 import pack.model.ScoreModel;
 
 @Controller
-public class InputController {
+public class DisplayController {
 	@Autowired
 	public ScoreModel scoreModel;
 	
