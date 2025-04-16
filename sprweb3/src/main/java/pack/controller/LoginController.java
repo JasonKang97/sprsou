@@ -17,7 +17,7 @@ public class LoginController {
 	public String loginPost(@RequestParam("id") String id, @RequestParam("pwd") String pwd, Model model) {
 		String data;
 		if(id.equals("aa") && pwd.equals("123")) {
-			data="redirect:http://localhost/input.html";
+			data="redirect:http://localhost/display.html";
 		}else {
 			data="redirect:http://localhost/loginfail.html";
 		}
