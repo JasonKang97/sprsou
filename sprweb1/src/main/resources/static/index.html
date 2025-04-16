@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+function func(){
+         f.submit();
+}
+</script>
+</head>
+<body>
+<h1>스프링 웹 프로젝트</h1>
+<a href="test1">컨트롤러 만나기 1</a><br>
+<a href="test2">컨트롤러 만나기 2</a><br>
+<a href="test3">컨트롤러 만나기 3</a><br>
+<a href="testgood">컨트롤러 만나기 3</a><br>
+<a href="nice">컨트롤러 만나기 3</a><br>
+<a href="test4">컨트롤러 만나기 4</a><br>
+<hr>
+<form action="test5" method="post">
+	<input type="submit" value="컨트롤러 만나기 5(post)">
+</form>
+<br>
+<a href="javascript:func();">컨트롤러 만나기 5(a tag를 이용한 post)</a>
+<form action="test5" method="post" name="f"></form>
+<br>
+<form action="test6" method="post">
+	<input type="submit" value="컨트롤러 만나기 6(post)">
+</form>
+<br>
+<form action="test7" method="post">
+	<input type="submit" value="컨트롤러 만나기 7(post)">
+</form>
+<br>
+<a href="test8">data 얻기</a><br>
+<a href="test8_1">data 얻기2</a><br>
+<a href="test8_2">data 얻기3</a><br>
+<hr>
+두 번째 컨트롤러 클래스와 매핑<br>
+<form action="test9" method="get">
+	<input type="submit" value="컨트롤러 만나기 9(get)">
+</form>
+<form action="test9" method="post">
+	<input type="submit" value="컨트롤러 만나기 9(post)">
+</form>
+<hr>
+세 번째 컨트롤러 클래스와 매핑<br>
+<a href="/java/korea">컨트롤러 만나기 10</a><br>
+<a href="/java/good">컨트롤러 만나기 10</a><br>
+<a href="ok">컨트롤러 만나기 10</a><br>
+<a href="hello">컨트롤러 만나기 10</a><br>
+</body>
+</html>
