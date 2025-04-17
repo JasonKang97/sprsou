@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h2>상품 자료들 출력</h2>
+<table border="1">
+	<tr>
+		<th>번호</th><th>아이디</th><th>상품명</th><th>가격</th><th>등록일</th>
+	</tr>
+	<tr th:each="s,idx:${dto2}">
+		<td th:text="${idx.count}"></td>	<!-- index는 0부터, count는 1부터 시작 -->
+		<td th:text="${s.id}"></td>
+		<td th:text="${s.name}"></td>
+		<td th:text="${s.price}"></td>
+		<td th:text="${s.regDate}"></td>
+	</tr>
+</table>
+</body>
+</html>

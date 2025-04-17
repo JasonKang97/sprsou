@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" layout:decorate="~{layouts/mylayout}">
+<!-- mylayout이라는 틀에 mylayout과 관련된 body 내용만 들고간다. 아래의 <h2>와 같이 관련 없는 것은 출력되지 않는다.-->
+
+<head>
+<meta charset="UTF-8">
+<title>레이아웃</title>
+</head>
+<body>
+<h2>본격적인 봄</h2>
+<div layout:fragment="content">
+<br>
+본문
+<br><br>
+</div>
+</body>
+</html>

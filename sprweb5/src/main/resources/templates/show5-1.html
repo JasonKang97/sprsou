@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" layout:decorate="~{layouts/mylayout}">
+<!-- mylayout이라는 틀에 mylayout과 관련된 body 내용만 들고간다.-->
+<head>
+<meta charset="UTF-8">
+<title>레이아웃</title>
+</head>
+<body>
+<h1>여기는 나오지 않음</h1>
+<div layout:fragment="content">
+	<table>
+		<tr>
+			<th>번호</th><th>메뉴</th>
+		</tr>
+		<tr>
+			<td>1</td><td>떡볶이</td>
+		</tr>
+		<tr>
+			<td>2</td><td>파스타</td>
+		</tr>
+	</table>
+	<img th:src="@{/images/image1.jpg}" alt="my image" title="안녕">
+</div>
+</body>
+</html>
