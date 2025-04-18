@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h3>상품 출력(@MVC - 전통적 방법)</h3>	<!-- @MVC는 spring project라는 고유의미 -->
+<table border="1">
+	<tr>
+		<th>코드</th><th>품명</th><th>수량</th><th>단가</th>
+	</tr>
+	<th:block th:if="${datas.size>0}">
+		<tr th:each="data:${datas}">
+			<td th:text="${data.code}">코드</td>
+			<td th:text="${data.sang}">품명</td>
+			<td th:text="${data.su}">수량</td>
+			<td>[[${data.dan}]]</td>
+		</tr>
+	</th:block>
+</table>
+</body>
+</html>
