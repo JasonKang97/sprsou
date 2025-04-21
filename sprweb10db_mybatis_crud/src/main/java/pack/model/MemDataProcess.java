@@ -32,4 +32,26 @@ public class MemDataProcess {
 		else return false;
 	}
 	
+	// 레코드 1개 읽기
+	public MemDto getData(String num){
+		MemDto memDto = dataMapperInterface.selectPart(num);
+		return memDto;
+	}
+	
+	// 자료 수정
+	public boolean update(MemBean bean){
+		// 번호 중복 확인 또는 번호 자동 증가 생략
+		logger.info("num: " + bean.getNum());
+		int re =  dataMapperInterface.updateData(bean);
+		if(re>0) return true;
+		else return false;
+	}
+	
+	// 자료 삭제
+	public boolean delete(String num){
+		// 번호 중복 확인 또는 번호 자동 증가 생략
+		int re =  dataMapperInterface.deleteData(num);
+		if(re>0) return true;
+		else return false;
+	}
 }
