@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="style.css">
+<script>
+	function submitForm() {
+    	document.getElementById('detailForm').submit();
+	}
+  
+	function deleteForm() {
+		if (confirm("정말 삭제하시겠습니까?")) {
+			document.getElementById('deleteForm').submit();
+		}
+	}
+  
+	function back() {
+		window.location.href = "/board";
+	}
+</script>
+</head>
+<body>
+* 상세보기 *
+<form id="detailForm" th:action="@{update(num=${data.num})}" th:object="${data}">
+<input type="hidden" th:field="*{num}">
+제목: [[${data.title}]]<br>
+<input type="hidden" th:field="*{title}">
+작성자: [[${data.author}]]<br>
+<input type="hidden" th:field="*{author}">
+작성 내용<br>
+<textarea cols="100" rows="3" name="content" readonly="readonly">[[${data.content}]]</textarea><br>
+<input type="hidden" name="bwrite" th:value="*{bwrite}">
+<input type="hidden" name="readcnt" th:value="*{readcnt}">
+</form>
+<form id="deleteForm" th:action="@{delete(num=${data.num})}" th:object="${data}">
+<input type="hidden" th:field="*{num}">
+</form>
+<a onclick="submitForm()">수정하기</a>
+<a onclick="deleteForm()">삭제하기</a>
+<a onclick="back()">돌아가기</a></body>
+</html>

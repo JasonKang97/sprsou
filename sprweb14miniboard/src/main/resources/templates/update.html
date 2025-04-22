@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="style.css">
+<script>
+  function submitForm() {
+    document.getElementById('updateForm').submit();
+  }
+  
+  function back() {
+	    window.location.href = "/board";
+	}
+</script>
+</head>
+<body>
+* 글 수정 *
+<form id="updateForm" th:action="@{update}" method="post" th:object="${data}">
+<input type="hidden" name="num" th:value="*{num}">
+제목: <input type="text" th:field="*{title}"><br>
+작성자: <input type="text" th:field="*{author}"><br>
+작성 내용<br>
+<textarea cols="100" rows="3" name="content">[[${data.content}]]</textarea><br>
+<input type="hidden" name="bwrite" th:value="*{bwrite}">
+<input type="hidden" name="readcnt" th:value="*{readcnt}">
+</form>
+<a onclick="submitForm()">수정완료</a>
+<a onclick="back()">돌아가기</a>
+</body>
+</html>

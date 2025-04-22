@@ -6,15 +6,20 @@
 </head>
 <body>
 <h2>회원 정보(@MVC - JPA)</h2>
+<a th:href="@{/insert}">회원 추가</a>
 <th:block th:if="${datas.size>0}">
 <table border="1">
 	<tr>
-		<th>번호</th><th>이름</th><th>주소</th>
+		<th>번호</th><th>이름</th><th>주소</th><th>수정 / 삭제</th>
 	</tr>
 	<tr th:each="data:${datas}">
 		<td th:text="${data.num}"></td>
 		<td th:text="${data.name}"></td>
-		<td th:text="${data.addr}"></td>
+		<td>[[${data.addr}]]</td>
+		<td>
+			<a th:href="@{/update(num=${data.num})}">수정</a> / 
+			<a th:href="@{/delete(num=${data.num})}">삭제</a>		
+		</td>
 	</tr>
 </table>
 </th:block>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a th:href="@{insert}">추가</a>
+
+<table border="1">
+	<tr>
+		<th>번호</th><th>제목</th><th>작성자</th><th>작성일</th><th>조회수</th>
+	</tr>
+	<th:block th:each="data:${data}">
+	<tr>
+		<td th:text="${data.num}"></td>
+		<td><a class="text-link" th:href="@{detail(num=${data.num})}">[[${data.title}]]</a></td> <!-- 텍스트처럼 보이게 수정 -->
+		<td th:text="${data.author}"></td>
+		<td th:text="${data.bwrite}"></td>
+		<td th:text="${data.readcnt}"></td>
+	</tr>
+	</th:block>
+</table>
+</body>
+</html>
