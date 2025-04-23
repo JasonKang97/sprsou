@@ -44,8 +44,11 @@ public class InsertController {
 		}
 		else {
 			model.addAttribute("msg", str);
-			return "error";
+			return "error";		// 정적인 에러 페이지를 호출. 현재 컨트롤러가 직접 뷰를 응답
+			
 			//return "forward:/error";
+			// Spring이 내부적으로 현재 요청을 /error로 다시 전달하고, /error 경로를 처리하는 다른 컨트롤러 메서드가 실행됨.
+			// 일종의 내부 요청 재전달(현재 컨트롤러가 아니라 다른 컨트롤러를 부름). URL은 변화 없다.
 		}
 	}
 }
