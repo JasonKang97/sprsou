@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css">
+<link rel="stylesheet" th:href="@{/css/board.css}">
+</head>
+<body>
+<h3>* 게시판(@MVC: JPA, Thymeleaf) *</h3>
+<table>
+	<tr>
+		<td>
+		[<a th:href="@{/list}">최근목록</a>]&nbsp;&nbsp;&nbsp;
+		[<a th:href="@{/insert}">글쓰기</a>]
+		</td>
+	</tr>
+</table>
+
+<table class="table table-striped">
+	<tr style="background-color: silver">
+		<th>번호</th><th>글제목</th><th>작성자</th><th>등록일</th><th>조회수</th>
+	</tr>
+	<th:block th:if="${not #strings.isEmpty(datas)}">	<!-- th:if="${data != null}" -->
+		<tr th:each="b:${datas}">
+			<td>[[${b.num}]]</td>
+			<td>
+			<!-- 댓글 들여 쓰기 -->
+			<th:block th:if="${b.nested}>0" th:each="m:${#numbers.sequence(1, b.nested)}">&nbsp;&nbsp;
+			</th:block>
+				<a th:href="@{/detail(num=${b.num},page=${page})}" th:text="${b.title}"></a>
+			</td>
+			<td>[[${b.name}]]</td>
+			<td>[[${b.bdate}]]</td>
+			<td>[[${b.readcnt}]]</td>
+		</tr>
+		<tr style="text-align: center;">
+			<td colspan="5">
+				<th:block th:each="page:${#numbers.sequence(startPage, endPage)}">
+					<a th:if="${page != nowPage}" th:href="@{list(page=${page})}" th:text="${page}"></a>
+					<b th:if="${page == nowPage}" th:text="${page}" style="color:red;"></b>
+				</th:block>
+			</td>
+		</tr>
+	</th:block>
+	<!-- search -->
+	<tr style="text-align: center;">
+		<td colspan="5">
+			<br>
+			<form th:action="@{search}" method="get">
+				<select name="searchName">
+					<option value="name" selected="selected">작성자</option>
+					<option value="title">글제목</option>
+				</select>
+				검색어: 
+				<input type="text" name="searchValue">
+				<input type="submit" value="검색" class="btn btn-info">
+			</form>
+		</td>
+	</tr>
+</table>
+</body>
+</html>
