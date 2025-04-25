@@ -3,6 +3,7 @@ package pack.model;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -20,4 +21,18 @@ public interface BoardRepository extends JpaRepository<Board, Integer>{
 	// 추가용 가장 큰 num 읽기
 	@Query("select max(b.num) from Board b")
 	int maxNum();
+	
+	// 조회수 증가
+	@Modifying(clearAutomatically = true)	// 영속성 컨텍스트의 1차 캐시 메모리를 비워주는 설정. select는 제외
+	@Query("update Board bo set bo.readcnt=bo.readcnt+1 where bo.num=?1")
+	void updateReadcnt(int num);
+	
+	// 비밀번호 얻기
+	@Query("select b.pass from Board b where num=?1")
+	String selectPass(int num);
+	
+	// 댓글 처리에서 같은 그룹 내의 onum 갱신
+	@Modifying(clearAutomatically = true)
+	@Query("update Board bo set bo.onum=bo.onum+1 where bo.gnum=?1 and bo.onum>=?2")
+	void updateOnum(int gnum, int onum);
 }

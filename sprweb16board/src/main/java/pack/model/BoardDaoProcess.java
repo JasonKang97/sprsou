@@ -2,6 +2,8 @@ package pack.model;
 
 
 
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,9 +62,8 @@ public class BoardDaoProcess {
 		return repository.maxNum();
 	}
 	
-	//@Transactional
-	public String insert(BoardBean bean) {
-		try {
+	@Transactional
+	public void insert(BoardBean bean) {
 			Board board = new Board();
 			board.setNum(bean.getNum());
 			board.setName(bean.getName());
@@ -77,9 +78,71 @@ public class BoardDaoProcess {
 			board.setOnum(bean.getOnum());
 			board.setNested(bean.getNested());
 			repository.save(board);	// insert into...
-			return "success";
-		} catch (Exception e) {
-			return "insert err: " + e.getMessage();
+	}
+	
+	// 상세보기용 조회수 증가
+	@Transactional
+	public void updateReadcnt(int num) {
+		repository.updateReadcnt(num);
+	}
+	
+	// 상세보기, 글수정, 댓글 등에서 사용
+	public Board detail(int num) {
+		Optional<Board> board = repository.findById(num);
+		logger.info("board: {}", board.get());
+		
+		if(board.isPresent()) {
+			return board.get();		// Optional type이 Board type으로 변환
+		}else {
+			return new Board();
 		}
 	}
+	
+	//  수정시 비밀번호 비교용
+	public String selectPass(int num) {
+		return repository.selectPass(num);
+	}
+	
+	// 수정
+	@Transactional
+	public void update(BoardBean bean) {
+			Optional<Board> board = repository.findById(bean.getNum());
+			Board dto = board.get();
+			dto.setName(bean.getName());
+			dto.setMail(bean.getMail());
+			dto.setTitle(bean.getTitle());
+			dto.setCont(bean.getCont());
+			//repository.save(dto);	// save를 사용하지 않아도 수정된다.
+	}
+	
+	// 삭제
+	@Transactional
+	public void delete(int num) {
+		repository.deleteById(num);
+	}
+	
+	// 댓글 처리
+	@Transactional
+	public void updateOnum(BoardBean bean) {
+		repository.updateOnum(bean.getGnum(), bean.getOnum());
+	}
+	
+	@Transactional
+	public void insertReply(BoardBean bean) {
+		Board board = new Board();
+		board.setNum(bean.getNum());
+		board.setName(bean.getName());
+		board.setPass(bean.getPass());
+		board.setMail(bean.getMail());
+		board.setTitle(bean.getTitle());
+		board.setCont(bean.getCont());
+		board.setBip(bean.getBip());
+		board.setBdate(bean.getBdate());
+		board.setReadcnt(0);
+		board.setGnum(bean.getGnum());
+		board.setOnum(bean.getOnum());
+		board.setNested(bean.getNested());
+		repository.save(board);
+	}
+	
 }

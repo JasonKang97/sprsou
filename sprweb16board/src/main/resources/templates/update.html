@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css">
+<link rel="stylesheet" th:href="@{/css/board.css}">
+<script type="text/javascript">
+window.onload = () => {
+	document.querySelector("#btnUp").onclick = chkUpFunc;
+}
+
+function chkUpFunc(){
+	// 입력자료 오류 검사 생략
+	
+	if(frm.pass.value === ""){
+		alert("비밀번호를 입력해주세요.")
+		frm.pass.focus();
+		return;
+	}
+	
+	if(confirm("정말 수정하시겠습니까?")){
+		frm.submit();
+	}
+}
+</script>
+</head>
+<body>
+<h3>* 수정하기 *</h3>
+<form th:action="@{update}" method="post" th:object="${data}" name="frm">
+	<input type="hidden" th:field="*{num}">
+	<input type="hidden" name="page" th:value="${page}">
+	<table class="table">
+		<tr>
+			<td>이름</td>	
+			<td><input type="text" th:field="*{name}"></td>
+		</tr>
+		<tr>
+			<td>암호</td>	
+			<td><input type="password" name="pass"></td>
+		</tr>
+		<tr>
+			<td>이메일</td>	
+			<td><input type="text" th:field="*{mail}"></td>
+		</tr>
+		<tr>
+			<td>제목</td>	
+			<td><input type="text" th:field="*{title}"></td>
+		</tr>
+		<tr>
+			<td>내용</td>	
+			<td><textarea rows="5" style="width:99%;" th:field="*{cont}"></textarea></td>
+		</tr>
+		<tr>
+			<td colspan="2" style="text-align: center;">
+				<input type="button" value="수정확인" id="btnUp">
+				<input type="button" value="목록보기" th:onclick="|location.href='@{list(page=${page})}'|">
+			</td>	
+		</tr>
+	</table>
+</form>
+</body>
+</html>
