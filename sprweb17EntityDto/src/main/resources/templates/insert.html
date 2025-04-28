@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h3>* 자료 입력 *</h3>
+<form th:action="@{insert}" method="post">
+번호: <input type="text" name="buserno"><br>
+이름: <input type="text" name="busername"><br>
+지역: <input type="text" name="buserloc"><br>
+전화: <input type="text" name="busertel"><br>
+<input type="submit" value="등록">
+</form>
+</body>
+</html>

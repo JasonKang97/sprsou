@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h3>* 부서 목록*</h3>
+	<a th:href="@{insert}"> 부서 추가</a>
+	<table border="1">
+		<tr>
+			<th>번호</th><th>이름</th><th>위치</th><th>전화</th>
+		</tr>
+		<th:block th:if="${data != null}">
+			<tr th:each="data:${data}">
+				<td th:text="${data.buserno}"></td>
+				<td th:text="${data.busername}"></td>
+				<td th:text="${data.buserloc}"></td>
+				<td th:text="${data.busertel}"></td>
+			</tr>
+		</th:block>
+	</table>
+	<br>
+	<a th:href="@{/}">메인으로</a>
+</body>
+</html>
