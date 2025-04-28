@@ -37,6 +37,7 @@ public class JikwonDto {
 				.jikwonname(jikwonname)
 				.jikwonjik(jikwonjik)
 				.jikwonpay(jikwonpay)
+				.buser(this.buserDto != null?buserDto.toEntity():null)
 				.build();
 	}
 	
@@ -60,6 +61,7 @@ public class JikwonDto {
 				.jikwonname(jikwon.getJikwonname())
 				.jikwonjik(jikwon.getJikwonjik())
 				.jikwonpay(jikwon.getJikwonpay())
+				.buserDto(jikwon.getBuser() != null?BuserDto.fromEntity(jikwon.getBuser()):null)
 				.build();
 	}
 	

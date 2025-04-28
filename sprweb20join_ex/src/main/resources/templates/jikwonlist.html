@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h3>직원 정보</h3>
+<table border="1">
+	<tr>
+		<th>사번</th><th>이름</th><th>직급</th><th>부서명</th><th>관리고객</th>
+	</tr>
+	<th:block th:if="${list.size>0}">
+	<tr th:each="data:${list}">
+			<td th:text="${data.jikwonno}"></td>
+			<th:block th:if="${data.gogeks!=null && !data.gogeks.isEmpty()}">
+				<td><a th:href="@{/gogeklist(jikwonname=${data.jikwonname}, jikwonjik=${data.jikwonjik})}">[[${data.jikwonname}]]</a></td>
+			</th:block>
+			<th:block th:unless="${data.gogeks!=null && !data.gogeks.isEmpty()}">
+				<td>[[${data.jikwonname}]]</td>
+			</th:block>
+			<td th:text="${data.jikwonjik}"></td>
+			<td th:text="${data.buser.busername}"></td>
+			<td th:text="${data.gogeks!=null && !data.gogeks.isEmpty()}?O:X"></td>
+	</tr>
+	</th:block>
+</table>
+</body>
+</html>

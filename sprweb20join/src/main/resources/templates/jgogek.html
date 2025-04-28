@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h3>직원과 고객 정보</h3>
+<a th:href="@{/}">목록보기</a>
+<table border="1">
+	<tr>
+		<th>사번</th><th>직원명</th><th>직급</th><th>고객정보</th>
+	</tr>
+	<th:block th:if="${glist !=null && !glist.empty}">
+	<tr th:each="data:${glist}">
+		<!-- 직원 정보 출력 -->
+		<td th:text="${data.jikwonno}"></td>
+		<td th:text="${data.jikwonname}"></td>
+		<td th:text="${data.jikwonjik}"></td>
+		<!-- 고객 정보는 1셀에 출력 -->
+		<td>
+			<th:block th:if="${data.gogeks!=null && !data.gogeks.isEmpty()}">
+				<span th:each="gogek:${data.gogeks}">
+					<span th:text="${gogek.gogekname}"></span> - <span th:text="${gogek.gogektel}"></span>
+				</span>
+			</th:block>
+		</td>
+	</tr>
+	</th:block>
+</table>
+</body>
+</html>

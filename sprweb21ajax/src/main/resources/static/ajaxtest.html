@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+window.onload = () => {
+	document.querySelector("#btnSingle").addEventListener("click", function(){
+		document.querySelector("#showData").innerHTML = "";
+		
+		fetch("list?name=oscar").then(response => response.json()).then(data => {
+			let str = data.name + "<br>";
+			str += data.skills[0] + " ";
+			str += data.skills[1];
+			document.querySelector("#showData").innerHTML = str;
+
+		}).catch(() => {
+			document.querySelector("#showData").innerHTML = "<b>에러 발생</b>";
+		});
+	});
+}
+</script>
+</head>
+<body>
+JSON 읽기<br>
+<input type="button" value="한 개의 자료 읽기" id="btnSingle">
+<hr>
+<div id="showData"></div>
+</body>
+</html>

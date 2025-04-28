@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h3>고객 담당 직원</h3>
+<a th:href="@{/}">목록보기</a>
+<div th:each="info:${dlist}">
+	<span th:text="${info}"></span>
+</div>
+</body>
+</html>
