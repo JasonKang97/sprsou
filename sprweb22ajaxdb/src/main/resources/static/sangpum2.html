@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+window.onload = () => {
+	document.querySelector("#showData").innerHTML = "";
+	document.querySelector("#btnShow").addEventListener("click", function(){
+		fetch("sangpums")
+		.then(response => {
+			if(!response.ok){
+				throw new Error("response error")
+			}
+			return response.json();
+		})
+		.then(data => {
+			let str = "";
+			let list = data.datas;
+			list.forEach(sangpum => {
+				str += "<tr>";
+				str += "<td>" + sangpum["code"] + "</td>";
+				str += "<td>" + sangpum["sang"] + "</td>";
+				str += "<td>" + sangpum.su + "</td>";
+				str += "<td>" + sangpum.dan + "</td>";					
+				str += "</tr>"
+			});
+			document.querySelector("#showData").innerHTML = str;
+		}).catch(error => {
+			document.querySelector("#showErr").innerHTML = "<b>에러 내용: </b>" + error.message;
+		});
+	});
+};
+
+</script>
+</head>
+<body>
+<h2>상품 정보(@MVC + Ajax(fetch))</h2>
+<button id="btnShow">상품 보기</button>
+<table border="1">
+	<thead>
+		<tr>
+			<th>코드</th><th>품명</th><th>수량</th><th>단가</th>
+		</tr>	
+	</thead>
+	<tbody id="showData">
+		
+	</tbody>
+</table>
+<br>
+<div id="showErr"></div>
+</body>
+</html>
