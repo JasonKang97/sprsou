@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>담당 직원 찾기</title>
+<script>
+    function findInfo() {
+        const gogekno = document.getElementById("gogekno").value;
+        const gogekname = document.getElementById("gogekname").value;
+        
+        fetch(`/findgogek?gogekno=${gogekno}&gogekname=${gogekname}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById("result").innerHTML = `<b>${data.error}</b>`;
+                } else {
+                    let info = data.datas;
+                    let result = `
+                        직원명 : ${info.jikwonname} &nbsp;
+                        직급 : ${info.jikwonjik} &nbsp;
+                        부서명 : ${info.busername} &nbsp;
+                        부서전화 : ${info.busertel}
+                    `;
+                    document.getElementById("result").innerHTML = result;
+                }
+            })
+            .catch(() => {
+                document.getElementById("result").innerHTML = "<b>에러 발생</b>";
+            });
+    }
+</script>
+</head>
+<body>
+    <h3>담당 직원 찾기</h3>
+    고객번호: <input type="text" id="gogekno" value="2">
+    고객명: <input type="text" id="gogekname" value="김혜순">
+    <button onclick="findInfo()">확인</button>
+    <hr>
+    <div id="result"></div>
+</body>
+</html>

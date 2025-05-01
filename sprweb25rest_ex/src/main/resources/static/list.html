@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+function find() {
+	const jikwonno = document.getElementById("jikwonno").value;
+	const jikwonname = document.querySelector("#jikwonname").value;
+	const bodyContent = JSON.stringify({jikwonno: jikwonno, jikwonname: jikwonname});
+	fetch("/search", {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: bodyContent
+	})
+	.then(response => {
+		if (!response.ok) {
+			throw new Error("Response 오류");
+		}
+		return response.json();
+	})
+    .then(data => {
+			let info = data.datas;
+				let result = "<table border='1'>";
+				result += "<tr><td>고객번호</td><td>고객명</td><td>고객전화</td></tr>";
+				info.forEach(gogek => {
+					result += `<tr><td>${gogek.gogekno}</td><td>${gogek.gogekname}</td><td>${gogek.gogektel}</td></tr>`;
+				});
+				result += `<tr><td colspan='3'>인원수: ${info.length}명</td></tr>`
+				result += "</table>";
+				document.getElementById("result").innerHTML = result;
+	})
+	.catch(() => {
+		document.getElementById("result").innerHTML = "<b>에러 발생</b>";
+	});
+}</script>
+</head>
+<body>
+	담당 고객 찾기<br>
+	직원번호: <input type="number" id="jikwonno" name="jikwonno" value="2">&nbsp;&nbsp;&nbsp;
+	직원명: <input type="text" id="jikwonname" name="jikwonname" value="한송이">&nbsp;&nbsp;&nbsp;
+	<button id="btn" onclick="find()">확인</button>
+	<hr>
+	<div id="result"></div>
+</body>
+</html>
