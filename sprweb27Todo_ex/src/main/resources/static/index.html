@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>할 일 목록</title>
+<script src="/js/todo.js" defer></script>
+<link rel="stylesheet" href="/css/index.css">
+</head>
+<body>
+	<!-- 버튼 영역 -->
+	<div class="menu-buttons">
+		<button onclick="openFormModal('add')">추가</button>
+	</div>
+
+	<!-- 할 일 테이블 -->
+	<table>
+		<thead>
+			<tr>
+				<th>할 일</th>
+				<th>우선순위</th>
+				<th>진행상태</th>
+				<th colspan="2">관리</th>
+			</tr>
+		</thead>
+		<tbody id="tableBody">
+			<tr th:each="todo : ${todos}">
+				<td th:text="${todo.title}"></td>
+				<td th:text="${todo.order}"></td>
+				<td><input type="checkbox" th:checked="${todo.completed}" disabled></td>
+				<td>
+					<button th:onclick="'openFormModal(\'edit\', ' + ${todo.id} + ')'">수정</button>
+				</td>
+				<td>
+					<button th:onclick="'openDeleteModal(' + ${todo.id} + ')'">삭제</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<!-- 통합 폼 모달 -->
+	<div id="formModal" class="modal">
+		<div class="modal-content">
+			<h3 id="modalTitle">할 일 추가</h3>
+			<form id="todoForm">
+				<input type="hidden" id="id">
+				<input type="text" id="title"placeholder="할 일" required> 
+				<input type="number" id="order"	placeholder="우선순위" required>
+				<label> <input type="checkbox" id="completed">완료 여부</label>
+				<div class="form-buttons">
+					<button type="button" onclick="submitForm()" id="submitBtn">등록</button>
+					<button type="button" onclick="closeFormModal()">취소</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<!-- 삭제 확인 모달 -->
+	<div id="deleteModal" class="modal">
+		<div class="modal-content">
+			<p>정말 삭제하시겠습니까?</p>
+			<div class="modal-buttons">
+				<button id="confirmDelete">확인</button>
+				<button id="cancelDelete">취소</button>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
