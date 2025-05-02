@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+function showList(){
+	fetch('/main/list', {method:'GET'})
+	.then(response => {
+		if(!response.ok){
+			throw new Error("네트워크 응답 오류")
+		}
+		return response.json()
+	})
+	.then(sangpum => {
+		displayList(sangpum);
+	})
+	.catch(error => {
+		console.log("읽기 중 에러: ",  error);
+	})
+}
+
+function displayList(sangpum){
+	const tableBody = document.getElementById("tableBody");
+	tableBody.innerHTML = "";
+	sangpum.forEach(data => {
+		const row = document.createElement('tr');	// DOM 사용
+		row.innerHTML = `
+			<td>${data.code}</td>
+			<td>${data.sang}</td>
+			<td>${data.su}</td>
+			<td>${data.dan}</td>`;
+		
+		tableBody.appendChild(row);
+	});
+}
+
+function insertData() {
+    window.open('/view/insert', 'insertWindow', 'width=500,height=400,left=200,top=100');
+}
+
+function updateData() {
+    window.open('/view/updateselect', 'updateWindow', 'width=500,height=400,left=200,top=100');
+}
+
+function deleteData() {
+    window.open('/view/delete', 'updateWindow', 'width=500,height=400,left=200,top=100');
+}
+</script>
+</head>
+<body>
+<span onclick="showList()">목록</span> &nbsp;&nbsp;&nbsp;
+<span onclick="insertData()">추가</span> &nbsp;&nbsp;&nbsp;
+<span onclick="updateData()">수정</span> &nbsp;&nbsp;&nbsp;
+<span onclick="deleteData()">삭제</span>
+<br><br>
+
+<table border="1">
+	<thead>
+		<tr>
+			<th>코드</th><th>품명</th><th>수량</th><th>단가</th>
+		</tr>
+	</thead>
+	<tbody id="tableBody">
+		<!-- 상품 자료 표시 위치 -->
+		
+	</tbody>
+</table>
+
+
+
+
+
+
+</body>
+</html>

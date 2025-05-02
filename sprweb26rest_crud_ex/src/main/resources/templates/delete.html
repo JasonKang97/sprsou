@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+function deleteData(num){
+	if(confirm("정말 삭제할까요?")){
+		const code = document.querySelector("#code").value;
+		fetch(`/main/delete?code=${code}`, {method:'DELETE'})
+		.then(response => {
+			if(!response.ok){
+				throw new Error("네트워크 응답 오류")
+			}
+			return response.text();
+		})
+		.then(data => {
+			if(data==="fail"){
+				alert("존재하지 않는 코드입니다.")
+			}else{
+				if (window.opener) {
+					window.opener.location.reload();  // 부모 창 새로고침
+				}
+				window.close();  // 현재 창 닫기
+				
+			}
+			
+		})
+		.catch(error => {
+			console.log("읽기 중 에러: ",  error);
+		})
+	}
+}
+
+</script>
+</head>
+<body>
+<form onsubmit="event.preventDefault(); deleteData()">
+삭제할 상품의 코드를 입력해주세요<br>
+<input type="number" name="code" min="1" id="code"><br>
+<input type="submit" value="확인">
+</form>
+</body>
+</html>

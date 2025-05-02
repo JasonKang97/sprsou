@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+function fetchMembers(){
+	fetch('/api/members', {method:'GET'})
+	.then(response => {
+		if(!response.ok){
+			throw new Error("네트워크 응답 오류")
+		}
+		return response.json()
+	})
+	.then(members => {
+		displayMembers(members);
+	})
+	.catch(error => {
+		console.log("읽기 중 에러: ",  error);
+	})
+}
+
+function displayMembers(members){
+	const tableBody = document.getElementById("tableBody");
+	tableBody.innerHTML = "";
+	members.forEach(member => {
+		const row = document.createElement('tr');	// DOM 사용
+		row.innerHTML = `
+			<td>${member.num}</td>
+			<td>${member.name}</td>
+			<td>${member.addr}</td>
+			<td><a href='#' onclick='editMember(${member.num})'>수정</a></td>
+			<td><a href='#' onclick='deleteMember(${member.num})'>삭제</a></td>`;
+		
+		tableBody.appendChild(row);
+	});
+}
+
+function editMember(num){
+	location.href = `/members/update/${num}`;	// 수정 페이지(update.html)로 이동
+}
+
+function deleteMember(num){
+	if(confirm("정말 삭제할까요?")){
+		fetch(`/api/members/${num}`, {method:'DELETE'})
+		.then(response => {
+			if(!response.ok){
+				throw new Error("네트워크 응답 오류")
+			}
+			fetchMembers();	// 삭제 후 목록보기
+		})
+		.catch(error => {
+			console.log("읽기 중 에러: ",  error);
+		})
+	}
+}
+</script>
+</head>
+<body>
+<h3>* 회원 정보 *</h3>
+<a th:href="@{/}">메인으로</a><br><br>
+<a th:href="@{/members/new}">회원추가</a><br><br>
+<button onclick="fetchMembers()">회원 읽기</button>
+<br><br>
+<table border="1">
+	<thead>
+		<tr>
+			<th>번호</th><th>이름</th><th>주소</th><th>수정</th><th>삭제</th>
+		</tr>
+	</thead>
+	<tbody id="tableBody">
+		<!-- 회원 자료 표시 위치 -->
+		
+	</tbody>
+</table>
+</body>
+</html>

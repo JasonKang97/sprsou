@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+function insert() {    
+	const code = document.querySelector("input[name='code']").value;
+	const sang = document.querySelector("input[name='sang']").value;
+	const su = document.querySelector("input[name='su']").value;
+	const dan = document.querySelector("input[name='dan']").value;
+	
+	fetch("/main/insert", {
+		method:'POST',
+		headers:{
+			'Content-Type':'application/json'
+		},
+		body:JSON.stringify({code, sang, su, dan})
+	})
+	.then(response => {
+		if(!response.ok){
+			throw new Error("상품 추가 중 에러 발생");
+		}
+		return response.json();
+	})
+	.then(data => {
+		if(data.isSuccess){
+			alert("상품 추가 완료");
+			if (window.opener) {
+				window.opener.location.reload();  // 부모 창 새로고침
+			}
+			window.close();  // 현재 창 닫기
+		}
+	})
+	.catch(error => {
+		console.log('error: ', error);
+	})
+}
+
+</script>
+</head>
+<body>
+<form onsubmit="event.preventDefault(); insert()">
+코드: [[${max}]]<br>
+<input type="hidden" th:value="${max}" name="code">
+품명: <input type="text" name="sang"><br>
+수량: <input type="number" name="su"><br>
+단가: <input type="number" min="0" name="dan"><br>
+<input type="submit" value="확인">
+</form>
+
+</body>
+</html>

@@ -1,0 +1,10 @@
+package pack.model;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+public interface SangpumRepository extends JpaRepository<Sangdata, Integer>{
+	
+	@Query("select max(s.code) from Sangdata s")
+	int findMaxCode();
+}
