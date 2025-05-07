@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h2>* 고객 로그인 *</h2>
+<form th:action="@{/login}" method="post">
+고객번호: <input type="number" name="gogekno"><br>
+고객이름: <input type="text" name="gogekname"><br><br>
+<input type="submit" value="담당직원 정보 찾기">
+</form>
+<br>
+<table border="1">
+	<tr>
+		<th>직원번호</th><th>직원명</th><th>부서명</th><th>직급</th><th>부서전화</th><th>성별</th>
+	</tr>
+	<th:block th:each="jik:${jlist}">
+		<tr>
+			<td>[[${jik.jikwonno}]]</td>
+			<td>[[${jik.jikwonname}]]</td>
+			<td>[[${jik.buser.busername}]]</td>
+			<td>[[${jik.jikwonjik}]]</td>
+			<td>[[${jik.buser.busertel}]]</td>
+			<td>[[${jik.jikwongen}]]</td>
+		</tr>
+	</th:block>
+</table>
+</body>
+</html>
