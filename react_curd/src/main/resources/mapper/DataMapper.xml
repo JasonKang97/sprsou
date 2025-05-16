@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member">
+	<!-- select의 결과를 memDto type으로 List 컬렉션에 저장 후 반환-->
+	<select id="getList" resultType="memDto">
+		select num, name, addr from mem
+	</select>
+	
+	<select id="getData" parameterType="int" resultType="memDto">
+		select num, name, addr from mem where num=#{num}
+	</select>
+	
+	<insert id="insert" parameterType="memDto">
+		insert into mem(num, name, addr) values(#{num}, #{name}, #{addr})
+	</insert>
+	
+	<update id="update" parameterType="memDto">
+		update mem set name=#{name}, addr=#{addr} where num=#{num}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from mem where num=#{num}
+	</delete>
+</mapper>

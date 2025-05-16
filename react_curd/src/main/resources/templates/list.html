@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<a th:href="@{/insertform}">회원 추가</a>
+<h3>회원 정보(MyBatis)</h3>
+<table>
+	<thead>
+		<tr>
+			<th>번호</th><th>이름</th><th>주소</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr th:each="m:${list}">
+			<td th:text="${m.num}"/><td th:text="${m.name}"/><td>[[${m.addr}]]</td>
+		</tr>
+	</tbody>
+</table>
+</body>
+</html>
