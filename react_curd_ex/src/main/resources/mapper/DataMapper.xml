@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="jikwon">
+	<!-- select의 결과를 jikwonDto type으로 List 컬렉션에 저장 후 반환-->
+	<select id="getListYear" resultType="jikwonDto">
+		select *, TIMESTAMPDIFF(YEAR,jikwonibsail,NOW()) jikwonyear from jikwon
+	</select>
+	
+	<select id="getData" parameterType="int" resultType="jikwonDto">
+		select * from jikwon where jikwonno=#{jikwonno}
+	</select>
+	
+	<update id="update" parameterType="jikwonDto">
+		update jikwon set jikwonjik=#{jikwonjik} where jikwonno=#{jikwonno}
+	</update>
+	
+</mapper>

@@ -19,8 +19,8 @@ public class MemDao {
 	}
 	
 	// 부분자료 읽기
-	public List<MemDto> getData(){
-		return session.selectOne("member.getData");
+	public MemDto getData(int num){
+		return session.selectOne("member.getData", num);
 	}
 	
 	// 자료 추가
