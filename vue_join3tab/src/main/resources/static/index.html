@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h2>세 개의 테이블 조인 결과 보기</h2>
+<button onclick="fetchJoinData()">자료 읽기(Ajax)</button>
+<br><br>
+
+<table id="data-table">
+	<thead>
+		<tr>
+			<th>부서번호</th><th>부서명</th><th>부서위치</th><th>직원번호</th><th>직원명</th><th>직급</th><th>연봉</th>
+			<th>고객번호</th><th>고객명</th><th>고객전화</th>
+		</tr>	
+	</thead>
+	<tbody>
+
+
+	</tbody>
+</table>
+
+<script type="text/javascript">
+	async function fetchJoinData(){
+		try{
+			const response = await fetch('/joindata');
+			if(!response.ok){
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
+			const data = await response.json();
+			
+			const tableBody = document.querySelector('#data-table tbody');
+			tableBody.innerHtml='';		// 초기화
+			
+			data.forEach(item => {
+				const row = document.createElement('tr');
+				row.innerHTML = 
+					`<td>${item.buserno}</td>
+					<td>${item.busername}</td>
+					<td>${item.buserloc}</td>
+					<td>${item.jikwonno}</td>
+					<td>${item.jikwonname}</td>
+					<td>${item.jikwonjik}</td>
+					<td>${item.jikwonpay}</td>
+					<td>${item.gogekno}</td>
+					<td>${item.gogekname}</td>
+					<td>${item.gogektel}</td>
+					`;
+					
+				tableBody.appendChild(row);
+			});
+			
+		}catch(error){
+			console.log("에러: " + error);
+			alert('data 읽기 오류')
+		}
+	}
+</script>
+</body>
+</html>
