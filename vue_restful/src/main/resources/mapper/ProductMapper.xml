@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="product">
+<!-- select의 결과를 DataDto 타입으로 List 컬렉션에 저장 후 반환  -->
+	<select id="getAll" resultType="productDto">
+		select * from product 
+	</select>
+	
+	<select id="getData" parameterType="string" resultType="productDto">
+		select * from product where code=#{code}
+	</select>
+	
+	<insert id="insert" parameterType="productDto">
+		insert into product(code, name, description, price) values(#{code}, #{name}, #{description}, #{price});
+	</insert>
+	
+	<update id="update" parameterType="productDto">
+		update product set name=#{name}, description=#{description}, price=#{price} where code=#{code}
+	</update>
+	
+	<delete id="delete" parameterType="string">
+		delete from product where code=#{code}
+	</delete>
+</mapper>

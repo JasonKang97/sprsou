@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="buser">
+<!-- select의 결과를 DataDto 타입으로 List 컬렉션에 저장 후 반환  -->
+	<select id="getAll" resultType="buserDto">
+		select * from buser 
+	</select>
+	
+	<select id="getData" parameterType="int" resultType="buserDto">
+		select * from buser where buserno=#{buserno}
+	</select>
+	
+	<insert id="insert" parameterType="buserDto">
+		insert into buser(buserno, busername, buserloc, busertel) values(#{buserno}, #{busername}, #{buserloc}, #{busertel});
+	</insert>
+	
+	<update id="update" parameterType="buserDto">
+		update buser set busername=#{busername}, buserloc=#{buserloc}, busertel=#{busertel} where buserno=#{buserno}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from buser where buserno=#{buserno}
+	</delete>
+</mapper>
