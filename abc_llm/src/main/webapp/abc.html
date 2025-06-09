@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="geminiApi.js"></script>
+</head>
+<body>
+<h1>JEMINI API test</h1>
+<label for="question">질문 입력</label><br>
+<textarea id="question" rows="4" cols="50" placeholder="강남역 근처 맛집은?"></textarea>
+<br><br>
+<button onclick="askFunc()">질문하기</button>
+
+<h3>답변</h3>
+<pre id="response"></pre>
+
+<script type="text/javascript">
+	async function askFunc(){
+		const url=`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`
+		const userQuestion = document.getElementById("question").value.trim();
+		const responseBox = document.getElementById("response");
+		
+		if(!userQuestion){
+			responseBox.innerText = '질문을 입력해주세요';
+			return;
+		}
+		
+		responseBox.innerText = "답변을 기다리는 중..."
+		
+		const requestBody = {
+			contents:[
+				{
+					parts:[{text:userQuestion}]
+				}
+			]
+		};
+		
+		try {
+			const response = await fetch(url, {
+				method:'POST',
+				headers:{'Content-Type':'application/json'},
+				body:JSON.stringify(requestBody),
+			});
+			
+			// Gemini가 보내준 응답 메세지 처리
+			const data = await response.json();
+			console.log("응답: ",JSON.stringify(data));
+			
+			// ?. optional chaining 연산자 사용
+			const rawAnswer = data?.candidates?.[0]?.content?.parts?.[0]?.text ?? "응답없음";
+			//console.log("응답: ",rawAnswer);
+			
+			// markdown 기호(**) 없애기 - 정규 표현식
+			const clearAnswer = rawAnswer.replace(/[*_`>#-]+/g, "").trim();
+			
+			responseBox.innerText = clearAnswer;
+			
+		} catch (error) {
+			console.error('에러:', error)
+			responseBox.innerText = "요청 실패: " + error.message;
+		}
+	}
+</script>
+</body>
+</html>
