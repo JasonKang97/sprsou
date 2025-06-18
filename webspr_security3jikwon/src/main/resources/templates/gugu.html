@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h3>구구단 입력 페이지</h3>
+<form th:action="@{/gugu}" method="post">
+	단 입력: <input type="number" id="num" name="num" value="2" min="2" max="16">
+	<input type="submit" value="확인">
+</form>
+</body>
+</html>
