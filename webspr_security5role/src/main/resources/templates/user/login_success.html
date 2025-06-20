@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<p>
+	<strong sec:authentication="name"></strong>님 로그인 성공! 환영합니다
+	<br/>
+	<a th:href="@{/}">확인(메인으로 이동)</a>
+</p>
+</body>
+</html>

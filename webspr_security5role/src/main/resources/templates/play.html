@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h3>회원 전용 공간(로그인 O)</h3>
+<p>
+	<strong sec:authentication="name"></strong>님 회원님 만의 놀이터예요. 즐기세요
+</p>
+<br/>
+<a th:href="@{/}">메인으로 이동</a>
+</body>
+</html>
