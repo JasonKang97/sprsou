@@ -30,7 +30,7 @@ function sendMessage(){	// 서버로 메세지 전송
 	
 	// 이름(채팅명) 입력 후 서버로 전송 -> 이름 입력란 비활성화
 	if(!nameInput.disabled){
-		stompClient.send("/app/chat.adddUser", {}, JSON.stringify({sender:nameInput.value, type:'JOIN'}));
+		stompClient.send("/app/chat.addUser", {}, JSON.stringify({sender:nameInput.value, type:'JOIN'}));
 		nameInput.disabled = true;
 	}
 	
