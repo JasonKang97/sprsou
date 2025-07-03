@@ -2,9 +2,96 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>고객 관리</title>
 </head>
 <body>
-<a href="/alldata">전체자료 읽기</a>
+	<h2>고객 목록</h2>
+	<table border="1">
+		<thead>
+			<tr>
+				<th>이름</th><th>나이</th><th>성별</th><th>관리</th>
+			</tr>
+		</thead>
+		<tbody id="customerTableBody"></tbody>
+	</table>
+
+	<h3>고객 추가</h3>
+	<label for="name">이름: </label>	<input id="name" placeholder="이름"><br>
+	<label for="age">나이: </label><input id="age" type="number" placeholder="나이"><br>
+	<label><input type="radio" name="gender" value="남" checked> 남</label>
+	<label><input type="radio" name="gender" value="여"> 여</label><br>
+	<button onclick="insertCustomer()">추가</button>
+
+	<script>
+		async function loadCustomers() {
+			const res = await fetch('/alldata');
+			const data = await res.json();
+			const tbody = document.getElementById('customerTableBody');
+			tbody.innerHTML = '';
+			data.forEach(c => {
+				tbody.innerHTML += `<tr>
+										<td>${c.name}</td>
+										<td>${c.age}</td>
+										<td>${c.gender}</td>
+										<td>
+											<button onclick="updateCustomer('${c.name}')">수정</button>
+											<button onclick="deleteCustomer('${c.name}')">삭제</button>
+										</td>
+									</tr>`;
+			});
+		}
+	
+		async function insertCustomer() {
+			const name = document.getElementById('name').value;
+			const age = document.getElementById('age').value;
+			const gender = document.querySelector('input[name="gender"]:checked').value;
+			const params = new URLSearchParams({ name, age, gender });
+	
+			const res = await fetch('/insert', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+				body: params
+		});
+			
+			const msg = await res.text();
+			alert(msg);
+			loadCustomers();
+		}
+	
+		async function updateCustomer(name) {
+			const age = prompt("새 나이를 입력하세요:");
+			const gender = prompt("새 성별을 입력하세요:");
+			const params = new URLSearchParams({ name, age, gender });
+	
+			const res = await fetch('/updatedata', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+				body: params
+			});
+			
+			const msg = await res.text();
+			alert(msg);
+			loadCustomers();
+		}
+	
+		async function deleteCustomer(name) {
+			if (confirm(`${name}님을 삭제하시겠습니까?`)) {
+				const params = new URLSearchParams({ name });
+				const res = await fetch('/delete', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+					body: params
+				});
+				
+				const msg = await res.text();
+				alert(msg);
+				loadCustomers();
+			}else{
+				return;
+			}
+		}
+	
+	  loadCustomers();
+	</script>
 </body>
 </html>
